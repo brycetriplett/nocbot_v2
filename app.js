@@ -15,6 +15,8 @@ const app = new App({
 
 app.command("/telrad", async ({ command, ack, say , respond }) => {
   await ack();
+  
+  await respond('processing command.... ');
 
   await processors.telradProcessor(command, respond)
     .then((response) => {
