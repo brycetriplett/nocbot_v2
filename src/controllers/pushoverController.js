@@ -1,4 +1,4 @@
-const pushoverAPI = require("@services/telrad/pushoverAPI.js");
+const pushoverAPI = require("@services/pushover/pushoverAPI.js");
 const pushoverBlocks = require("@blocks/pushoverBlocks.js");
 
 const pushoverController = async ({ command, say, respond }) => {
