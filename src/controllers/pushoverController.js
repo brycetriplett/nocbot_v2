@@ -34,8 +34,8 @@ const pushoverController = async ({ command, say, respond }) => {
       respond("incorrect command");
       return;
   }
-
-  say(pushoverBlocks.defaultBlocks({ command, result, header }));
+  say("we got here");
+  // say(pushoverBlocks.defaultBlocks({ command, result, header }));
 };
 
 module.exports = pushoverController;
