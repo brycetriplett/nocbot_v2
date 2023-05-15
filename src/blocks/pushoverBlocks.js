@@ -1,4 +1,4 @@
-const pushoverBlocks = ({ command, result, header }) => {
+const defaultBlocks = ({ command, result, header }) => {
   return {
     text: "fallback message",
     blocks: [
@@ -51,4 +51,4 @@ const pushoverBlocks = ({ command, result, header }) => {
   };
 };
 
-module.exports = { pushoverBlocks };
+module.exports = { defaultBlocks };
