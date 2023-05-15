@@ -21,6 +21,7 @@ app.use(async ({ ack, respond, next }) => {
 });
 
 app.command("/telrad", controllers.telradController);
+app.command("/pushover", controllers.pushoverController);
 
 app.error(controllers.errorController(app));
 
