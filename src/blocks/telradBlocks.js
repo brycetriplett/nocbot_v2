@@ -1,4 +1,4 @@
-const defaultBlocks = (command, result, header) => {
+const defaultBlocks = ({ command, result, header }) => {
   const [dl, ul] = result.AssociatedGlobalServiceProfileName._text.split("x");
 
   return {
@@ -35,7 +35,7 @@ const defaultBlocks = (command, result, header) => {
           },
           {
             type: "plain_text",
-            text: `Speed: Freedom ${dl}`,
+            text: `Speed Profile: Freedom ${dl}`,
             emoji: true,
           },
         ],
@@ -63,7 +63,7 @@ const defaultBlocks = (command, result, header) => {
   };
 };
 
-function deleteBlocks(imsi, user_name, result, header) {
+const deleteBlocks = ({ command, result, header }) => {
   return {
     text: "fallback message",
     blocks: [
@@ -83,12 +83,12 @@ function deleteBlocks(imsi, user_name, result, header) {
         fields: [
           {
             type: "plain_text",
-            text: `IMSI: ${imsi}`,
+            text: `IMSI: ${command.imsi}`,
             emoji: true,
           },
           {
             type: "plain_text",
-            text: `Result Code: ${result}`,
+            text: `Result: Success`,
             emoji: true,
           },
         ],
@@ -98,7 +98,7 @@ function deleteBlocks(imsi, user_name, result, header) {
         elements: [
           {
             type: "mrkdwn",
-            text: `Command executed by *${user_name}*`,
+            text: `Command executed by *${command.user_name}*`,
           },
         ],
       },
@@ -112,6 +112,6 @@ function deleteBlocks(imsi, user_name, result, header) {
       },
     ],
   };
-}
+};
 
 module.exports = { defaultBlocks, deleteBlocks };

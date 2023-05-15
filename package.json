@@ -17,7 +17,7 @@
     "dotenv": "^16.0.3",
     "jest": "^29.5.0",
     "module-alias": "^2.2.2",
-    "mysql": "^2.18.1",
+    "mysql2": "^3.3.1",
     "netmask": "^2.0.2",
     "nodemon": "^2.0.22",
     "xml-js": "^1.6.11"
@@ -26,6 +26,6 @@
     "@root": ".",
     "@controllers": "./src/controllers",
     "@services": "./src/services",
-    "@blocks": "./src/blocks"               
+    "@blocks": "./src/blocks"
   }
 }

@@ -1,15 +1,17 @@
 require("module-alias/register");
 require("dotenv").config();
 
+const axios = require("axios");
 const { App } = require("@slack/bolt");
 
-const errorBlocks = require("@blocks/errorBlocks.js");
+const controllers = require("@controllers");
 
 const app = new App({
   token: process.env.SLACK_BOT_TOKEN,
   signingSecret: process.env.SLACK_SIGNING_SECRET,
   socketMode: true,
   appToken: process.env.APP_TOKEN,
+  extendedErrorHandler: true,
 });
 
 app.use(async ({ ack, respond, next }) => {
@@ -18,21 +20,9 @@ app.use(async ({ ack, respond, next }) => {
   await next();
 });
 
-app.command("/telrad", async ({ command, say, respond }) => {
-  await controllers.telradController({ command, say, respond });
-});
+app.command("/telrad", controllers.telradController);
 
-app.error(async ({ error, context, command, respond }) => {
-  const blocks = errorBlocks(command, error);
-  respond(blocks);
-
-  await app.client.chat.postMessage({
-    channel: "nocbot_error",
-    text: "fallback text",
-    blocks: blocks,
-    token: context.botToken,
-  });
-});
+app.error(controllers.errorController(app));
 
 (async () => {
   const port = 3000;
