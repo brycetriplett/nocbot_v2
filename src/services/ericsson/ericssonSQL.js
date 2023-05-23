@@ -1,33 +1,33 @@
 const mysql = require("mysql2/promise");
 
-let starConnection = mysql.createPool({
-  host: process.env.STAR_SQL_HOSTNAME,
+const connectionParams = {
+  host: process.env.STAR_HOSTNAME,
   database: process.env.STAR_SQL_DATABASE,
   port: process.env.STAR_SQL_PORT,
   user: process.env.STAR_SQL_USERNAME,
   password: process.env.STAR_SQL_PASSWORD,
-});
+};
 
-const getUsedIPs = () =>
-  new Promise((resolve, reject) =>
-    starConnection.query(
+const getUsedIPs = async () => {
+  const connection = await mysql.createConnection(connectionParams);
+
+  try {
+    const [results, fields] = await connection.execute(
       `
         SELECT srv_pty_ip
         FROM apn_cfg_profile
-      `,
+      `
+    );
 
-      (err, rows) => {
-        if (err) reject(err);
-        else {
-          let ipList = [];
-          for (let ip of rows) {
-            ipList.push(ip.srv_pty_ip);
-          }
+    let ipList = [];
+    for (let ip of results) {
+      ipList.push(ip.srv_pty_ip);
+    }
 
-          resolve(ipList);
-        }
-      }
-    )
-  );
+    return ipList;
+  } finally {
+    await connection.end();
+  }
+};
 
 module.exports = { getUsedIPs };

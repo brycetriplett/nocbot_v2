@@ -1,19 +1,12 @@
 const telradAPI = require("@services/telrad/telradAPI.js");
 const telradBlocks = require("@blocks/telradBlocks.js");
+const lteValidator = require("./validators/lteValidator");
 
 const telradController = async ({ command, say, respond }) => {
   let [method, imsi, option] = command.text.split(" ");
 
-  if (!/^\d+$/.test(imsi)) {
-    respond("IMSI either contains letters or is in the wrong place");
-    return;
-  } else if (imsi.length < 15) {
-    respond("Incorrect IMSI Length");
-    return;
-  } else if (method === "speed" && (!option || !/25|50|100/.test(option))) {
-    respond("Invalid or missing speed profile");
-    return;
-  }
+  let validationResult = lteValidator({ method, imsi, option, respond });
+  if (!validationResult) return;
 
   let header;
   let result;

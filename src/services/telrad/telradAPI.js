@@ -1,8 +1,8 @@
 const { xml2js } = require("xml-js");
 const axios = require("axios");
-const ip = require("netmask");
 
-const sql = require("@services/getSimData.js");
+const sql = require("@services/getSimData");
+const getFreeIP = require("@services/getFreeIP");
 
 const username = process.env.BREEZEVIEW_USERNAME;
 const password = process.env.BREEZEVIEW_PASSWORD;
@@ -108,31 +108,10 @@ const getUsedIPs = () =>
     return result;
   });
 
-const getFreeIP = async () => {
-  const iPBlock = new ip.Netmask(networkSubnet);
-  const usedIPs = await getUsedIPs();
-
-  let result;
-
-  try {
-    iPBlock.forEach((item) => {
-      const lastOctet = item.split(".")[3];
-
-      if (!["0", "1", "255"].includes(lastOctet) && !usedIPs.includes(item)) {
-        result = item;
-        throw new Error("Found IP");
-      }
-    });
-  } catch (error) {
-    if (error.message !== "Found IP") throw error;
-  }
-
-  return result;
-};
-
 const addSimConfig = async (imsi) => {
+  const usedIPs = await getUsedIPs();
+  const freeIP = await getFreeIP(networkSubnet, usedIPs);
   const simData = await sql.getSimData(imsi);
-  const freeIP = await getFreeIP();
 
   await axios({
     method: "POST",

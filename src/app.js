@@ -1,7 +1,6 @@
 require("module-alias/register");
 require("dotenv").config();
 
-const axios = require("axios");
 const { App } = require("@slack/bolt");
 
 const controllers = require("@controllers");
@@ -21,6 +20,7 @@ app.use(async ({ ack, respond, next }) => {
 });
 
 app.command("/telrad", controllers.telradController);
+app.command("/ericsson", controllers.ericssonController);
 app.command("/pushover", controllers.pushoverController);
 
 app.error(controllers.errorController(app));
