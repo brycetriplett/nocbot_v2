@@ -3,4 +3,5 @@ module.exports = {
   telradController: require("./telradController"),
   pushoverController: require("./pushoverController"),
   ericssonController: require("./ericssonController"),
+  pppoeController: require("./pppoeController"),
 };

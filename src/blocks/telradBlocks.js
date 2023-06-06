@@ -20,17 +20,17 @@ const defaultBlocks = ({ command, result, header }) => {
         fields: [
           {
             type: "plain_text",
-            text: `IMSI: ${result.IMSI._text}`,
+            text: `IMSI: ${result?.IMSI?._text}`,
             emoji: true,
           },
           {
             type: "plain_text",
-            text: `IP: ${result.PdnAddressAllocation._text}`,
+            text: `IP: ${result?.PdnAddressAllocation?._text}`,
             emoji: true,
           },
           {
             type: "plain_text",
-            text: `Activation: ${result.ImsiActivation._text}`,
+            text: `Activation: ${result?.ImsiActivation?._text}`,
             emoji: true,
           },
           {
@@ -114,4 +114,7 @@ const deleteBlocks = ({ command, result, header }) => {
   };
 };
 
-module.exports = { defaultBlocks, deleteBlocks };
+module.exports = {
+  defaultBlocks,
+  deleteBlocks,
+};
