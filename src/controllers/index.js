@@ -4,4 +4,5 @@ module.exports = {
   pushoverController: require("./pushoverController"),
   ericssonController: require("./ericssonController"),
   pppoeController: require("./pppoeController"),
+  pingController: require("./pingController"),
 };
