@@ -5,4 +5,5 @@ module.exports = {
   ericssonController: require("./ericssonController"),
   pppoeController: require("./pppoeController"),
   pingController: require("./pingController"),
+  taranaController: require("./taranaController"),
 };
