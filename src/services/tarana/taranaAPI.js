@@ -14,7 +14,6 @@ const startSpeedTest = (serial) =>
     method: "POST",
     headers: headers,
     url: `${hosturl}/v1/network/radios/${serial}/speed-test`,
-    data: "{}",
   }).then((response) => {
     return response.data.message;
   });
