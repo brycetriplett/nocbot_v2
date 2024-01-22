@@ -5,6 +5,7 @@ const api_key = process.env.TARANA_API_KEY;
 
 const headers = {
   accept: "application/json",
+  "Content-Type": "application/json",
   "x-api-key": api_key,
 };
 
