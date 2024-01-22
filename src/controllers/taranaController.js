@@ -9,7 +9,7 @@ const taranaController = async ({ command, say, respond }) => {
 
   switch (method) {
     case "speedtest":
-      header = ":tarana: \tTarana Start SpeedTest\t :racing-motorcycle:";
+      header = ":tarana: \tTarana Start SpeedTest\t :racing_motorcycle:";
       result = await taranaAPI.startSpeedTest(serial);
       break;
 
@@ -18,7 +18,12 @@ const taranaController = async ({ command, say, respond }) => {
       return;
   }
 
-  say(taranaBlocks.defaultBlocks({ command, result, header }));
+  if (!result.error) {
+    say(taranaBlocks.defaultBlocks({ command, result, header }));
+  } else {
+    const errorMessage = result.error.message;
+    throw new Error(errorMessage);
+  }
 };
 
 module.exports = taranaController;

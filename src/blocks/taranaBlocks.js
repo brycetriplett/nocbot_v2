@@ -18,34 +18,25 @@ const defaultBlocks = ({ command, result, header }) => {
         fields: [
           {
             type: "plain_text",
-            text: `${command.command} ${command.text}`,
+            text: `Serial: ${result.data.serialNumber}`,
+            emoji: true,
+          },
+          {
+            type: "plain_text",
+            text: `Status: ${result.data.diagnosticOperationStatus}`,
             emoji: true,
           },
         ],
       },
       {
-        type: "section",
-        text: {
-          type: "mrkdwn",
-          text: result,
-        },
-      },
-      {
         type: "context",
         elements: [
           {
-            type: "mrkdwn",
-            text: `Command executed by ${command.user_name}`,
+            type: "plain_text",
+            text: "\n",
+            emoji: true,
           },
         ],
-      },
-      {
-        type: "section",
-        text: {
-          type: "plain_text",
-          text: "\n",
-          emoji: true,
-        },
       },
     ],
   };
