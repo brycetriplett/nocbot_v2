@@ -9,7 +9,7 @@ const taranaController = async ({ command, say, respond }) => {
 
   switch (method) {
     case "speedtest":
-      header = ":tarana: \tTarana Start SpeedTest\t :racing_motorcycle:";
+      header = ":tarana: \tTarana Start Speed Test\t :racing_motorcycle:";
       result = await taranaAPI.startSpeedTest(serial);
       break;
 
