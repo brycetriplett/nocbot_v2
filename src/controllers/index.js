@@ -6,4 +6,5 @@ module.exports = {
   pppoeController: require("./pppoeController"),
   pingController: require("./pingController"),
   taranaController: require("./taranaController"),
+  cbrsTaranaController: require("./cbrsTaranaController"),
 };

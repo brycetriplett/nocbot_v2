@@ -22,6 +22,7 @@ app.use(async ({ ack, respond, next }) => {
 app.command("/telrad", controllers.telradController);
 app.command("/ericsson", controllers.ericssonController);
 app.command("/tarana", controllers.taranaController);
+app.command("/cbrs-tarana", controllers.cbrsTaranaController);
 app.command("/pushover", controllers.pushoverController);
 app.command("/pppoe", controllers.pppoeController);
 app.command("/ping", controllers.pingController);

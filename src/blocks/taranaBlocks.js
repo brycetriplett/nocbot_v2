@@ -18,6 +18,16 @@ const defaultBlocks = ({ command, result, header }) => {
         fields: [
           {
             type: "plain_text",
+            text: `${command.command} ${command.text}`,
+            emoji: true,
+          },
+        ],
+      },
+      {
+        type: "section",
+        fields: [
+          {
+            type: "plain_text",
             text: `Serial: ${result.data.serialNumber}`,
             emoji: true,
           },
