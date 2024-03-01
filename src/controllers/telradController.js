@@ -1,4 +1,5 @@
 const telradAPI = require("@services/telrad/telradAPI.js");
+const ericssonAPI = require("@services/ericsson/ericssonAPI.js");
 const telradBlocks = require("@blocks/telradBlocks.js");
 const lteValidator = require("./validators/lteValidator");
 
@@ -10,11 +11,18 @@ const telradController = async ({ command, say, respond }) => {
 
   let header;
   let result;
+  let dualCheck;
 
   switch (method) {
     case "view":
       header = ":telrad: \tTelrad Sim Configuration\t :star:";
       result = await telradAPI.getSimConfig(imsi);
+      try {
+        await ericssonAPI.getSimConfig(imsi);
+        dualCheck = true;
+      } catch (error) {
+        dualCheck = false;
+      }
       break;
 
     case "add":
@@ -54,7 +62,7 @@ const telradController = async ({ command, say, respond }) => {
       return;
   }
 
-  say(telradBlocks.defaultBlocks({ command, result, header }));
+  say(telradBlocks.defaultBlocks({ command, result, header, dualCheck }));
 };
 
 module.exports = telradController;
