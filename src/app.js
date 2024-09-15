@@ -2,10 +2,13 @@ require("module-alias/register");
 require("dotenv").config();
 
 const { App } = require("@slack/bolt");
+const express = require("express");
+const bodyParser = require("body-parser");
 
 const controllers = require("@controllers");
 
-const app = new App({
+// Initialize Slack Bolt app
+const slackApp = new App({
   token: process.env.SLACK_BOT_TOKEN,
   signingSecret: process.env.SLACK_SIGNING_SECRET,
   socketMode: true,
@@ -13,24 +16,44 @@ const app = new App({
   extendedErrorHandler: true,
 });
 
-app.use(async ({ ack, respond, next }) => {
+// Middleware for Slack commands
+slackApp.use(async ({ ack, respond, next }) => {
   await ack();
   await respond("processing command....");
   await next();
 });
 
-app.command("/telrad", controllers.telradController);
-app.command("/ericsson", controllers.ericssonController);
-app.command("/tarana", controllers.taranaController);
-app.command("/cbrs-tarana", controllers.cbrsTaranaController);
-app.command("/pushover", controllers.pushoverController);
-app.command("/pppoe", controllers.pppoeController);
-app.command("/ping", controllers.pingController);
+slackApp.command("/telrad", controllers.telradController);
+slackApp.command("/ericsson", controllers.ericssonController);
+slackApp.command("/tarana", controllers.taranaController);
+slackApp.command("/cbrs-tarana", controllers.cbrsTaranaController);
+slackApp.command("/pushover", controllers.pushoverController);
+slackApp.command("/pppoe", controllers.pppoeController);
+slackApp.command("/ping", controllers.pingController);
 
-app.error(controllers.errorController(app));
+slackApp.error(controllers.errorController(slackApp));
 
+// Initialize Express app
+const expressApp = express();
+expressApp.use(bodyParser.json()); // Parse JSON body
+
+// Webhook endpoint
+expressApp.post("/webhook", (req, res) => {
+  console.log("Received webhook payload:", req.body);
+  res.status(200).send("Webhook received!");
+});
+
+// Start Slack Bolt app
 (async () => {
-  const port = 3000;
-  await app.start(process.env.PORT || port);
-  console.log(`Slack Bolt app is running on port ${port}!`);
+  const slackPort = process.env.SLACK_PORT || 3000;
+  const expressPort = process.env.EXPRESS_PORT || 8080;
+
+  // Start Slack Bolt app
+  await slackApp.start(slackPort);
+  console.log(`Slack Bolt app is running on port ${slackPort}!`);
+
+  // Start Express server
+  expressApp.listen(expressPort, () => {
+    console.log(`Express server is running on port ${expressPort}!`);
+  });
 })();
