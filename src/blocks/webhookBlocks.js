@@ -5,13 +5,6 @@ const webhookBlocks = ({
   alertDescription,
   alertCreatedAt,
 }) => {
-  // Create fields dynamically from significantData
-  const fields = Object.entries(significantData).map(([key, value]) => ({
-    type: "plain_text",
-    text: `${key}: ${value}`,
-    emoji: true,
-  }));
-
   const blocks = [
     {
       type: "header",
@@ -26,7 +19,48 @@ const webhookBlocks = ({
     },
     {
       type: "section",
-      fields: fields,
+      fields: [
+        {
+          type: "plain_text",
+          text: `Operator: ${significantData.Operator}`,
+          emoji: true,
+        },
+        {
+          type: "plain_text",
+          text: `Site: ${significantData.Site}`,
+          emoji: true,
+        },
+        {
+          type: "plain_text",
+          text: `Device Hostname: ${significantData["Device Hostname"]}`,
+          emoji: true,
+        },
+        {
+          type: "plain_text",
+          text: `Device Serial Number: ${significantData["Device Serial Number"]}`,
+          emoji: true,
+        },
+        {
+          type: "plain_text",
+          text: `Sector: ${significantData.Sector}`,
+          emoji: true,
+        },
+        {
+          type: "plain_text",
+          text: `Device Type: ${significantData["Device Type"]}`,
+          emoji: true,
+        },
+        {
+          type: "plain_text",
+          text: `Device Reported Reason: ${significantData["Device Reported Reason"]}`,
+          emoji: true,
+        },
+        {
+          type: "plain_text",
+          text: `Disconnect Reason: ${significantData["Disconnect Reason"]}`,
+          emoji: true,
+        },
+      ],
     },
     {
       type: "context",
