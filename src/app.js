@@ -7,7 +7,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const controllers = require("@controllers");
-const blocks = require("@blocks");
+// const blocks = require("@blocks");
 
 // Initialize Slack Bolt app
 const slackApp = new App({
