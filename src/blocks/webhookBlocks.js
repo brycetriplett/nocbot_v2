@@ -30,11 +30,11 @@ const webhookBlocks = ({
         },
         {
           type: "mrkdwn",
-          text: `*Device Hostname*: ${significantData["Device Hostname"]}`,
+          text: `*Hostname*: ${significantData["Device Hostname"]}`,
         },
         {
           type: "mrkdwn",
-          text: `*Device Serial Number*: ${significantData["Device Serial Number"]}`,
+          text: `*Serial*: ${significantData["Device Serial Number"]}`,
         },
         {
           type: "mrkdwn",
