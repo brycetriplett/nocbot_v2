@@ -21,34 +21,28 @@ const webhookBlocks = ({
       type: "section",
       fields: [
         {
-          type: "plain_text",
-          text: `Operator: ${significantData.Operator}`,
-          emoji: true,
+          type: "mrkdwn",
+          text: `*Operator*: ${significantData.Operator}`,
         },
         {
-          type: "plain_text",
-          text: `Site: ${significantData.Site}`,
-          emoji: true,
+          type: "mrkdwn",
+          text: `*Site*: ${significantData.Site}`,
         },
         {
-          type: "plain_text",
-          text: `Device Hostname: ${significantData["Device Hostname"]}`,
-          emoji: true,
+          type: "mrkdwn",
+          text: `*Device Hostname*: ${significantData["Device Hostname"]}`,
         },
         {
-          type: "plain_text",
-          text: `Device Serial Number: ${significantData["Device Serial Number"]}`,
-          emoji: true,
+          type: "mrkdwn",
+          text: `*Device Serial Number*: ${significantData["Device Serial Number"]}`,
         },
         {
-          type: "plain_text",
-          text: `Sector: ${significantData.Sector}`,
-          emoji: true,
+          type: "mrkdwn",
+          text: `*Sector*: ${significantData.Sector}`,
         },
         {
-          type: "plain_text",
-          text: `Device Reported Reason: ${significantData["Device Reported Reason"]}`,
-          emoji: true,
+          type: "mrkdwn",
+          text: `*Device Reported Reason*: ${significantData["Device Reported Reason"]}`,
         },
         {
           type: "mrkdwn",
