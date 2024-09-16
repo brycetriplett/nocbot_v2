@@ -7,7 +7,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const controllers = require("@controllers");
-// const blocks = require("@blocks");
+const { webhookBlocks } = require("@blocks/webhookBlocks"); // Import the function correctly
 
 // Initialize Slack Bolt app
 const slackApp = new App({
@@ -41,11 +41,12 @@ const expressApp = express();
 expressApp.use(bodyParser.json()); // Parse JSON body
 
 // Function to post a message to Slack
-async function postToSlack(text) {
+async function postToSlack(blocks) {
   try {
     await slackApp.client.chat.postMessage({
-      channel: "C07M3EJQQTZ", // Ensure you have set this environment variable
-      text: text,
+      channel: process.env.SLACK_CHANNEL_ID, // Ensure you set this environment variable
+      text: "fallback message", // This is required by Slack but can be a fallback text
+      blocks: blocks,
     });
   } catch (error) {
     console.error("Error posting to Slack:", error);
@@ -55,7 +56,25 @@ async function postToSlack(text) {
 // Webhook endpoint
 expressApp.post("/webhook", (req, res) => {
   console.log("Received webhook payload:", req.body);
-  postToSlack("Your dynamic message here"); // Replace with your desired message
+
+  // Transform the incoming payload to the format required by webhookBlocks
+  const {
+    alertStatus,
+    significantData,
+    alertName,
+    alertDescription,
+    alertCreatedAt,
+  } = req.body;
+
+  const messageBlocks = webhookBlocks({
+    alertStatus,
+    significantData,
+    alertName,
+    alertDescription,
+    alertCreatedAt,
+  });
+
+  postToSlack(messageBlocks.blocks); // Use the blocks from webhookBlocks
   res.status(200).send("Webhook received!");
 });
 
