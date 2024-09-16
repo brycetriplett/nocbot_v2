@@ -53,7 +53,6 @@ const webhookBlocks = ({
         {
           type: "mrkdwn",
           text: `*Disconnect Reason*: ${significantData["Disconnect Reason"]}`,
-          emoji: true,
         },
       ],
     },
