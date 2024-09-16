@@ -2,11 +2,12 @@ require("module-alias/register");
 require("dotenv").config();
 const fs = require("fs");
 const https = require("https");
-const { App } = require("@slack/bolt");
+const { App, LogLevel } = require("@slack/bolt");
 const express = require("express");
 const bodyParser = require("body-parser");
 
 const controllers = require("@controllers");
+const blocks = require("@blocks");
 
 // Initialize Slack Bolt app
 const slackApp = new App({
@@ -15,6 +16,7 @@ const slackApp = new App({
   socketMode: true,
   appToken: process.env.APP_TOKEN,
   extendedErrorHandler: true,
+  logLevel: LogLevel.DEBUG, // Optional: set the log level to DEBUG for more verbose logs
 });
 
 // Middleware for Slack commands
@@ -38,9 +40,22 @@ slackApp.error(controllers.errorController(slackApp));
 const expressApp = express();
 expressApp.use(bodyParser.json()); // Parse JSON body
 
+// Function to post a message to Slack
+async function postToSlack(text) {
+  try {
+    await slackApp.client.chat.postMessage({
+      channel: "C07M3EJQQTZ", // Ensure you have set this environment variable
+      text: text,
+    });
+  } catch (error) {
+    console.error("Error posting to Slack:", error);
+  }
+}
+
 // Webhook endpoint
 expressApp.post("/webhook", (req, res) => {
   console.log("Received webhook payload:", req.body);
+  postToSlack("Your dynamic message here"); // Replace with your desired message
   res.status(200).send("Webhook received!");
 });
 
