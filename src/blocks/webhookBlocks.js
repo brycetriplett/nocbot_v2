@@ -47,17 +47,12 @@ const webhookBlocks = ({
         },
         {
           type: "plain_text",
-          text: `Device Type: ${significantData["Device Type"]}`,
-          emoji: true,
-        },
-        {
-          type: "plain_text",
           text: `Device Reported Reason: ${significantData["Device Reported Reason"]}`,
           emoji: true,
         },
         {
-          type: "plain_text",
-          text: `Disconnect Reason: ${significantData["Disconnect Reason"]}`,
+          type: "mrkdwn",
+          text: `*Disconnect Reason*: ${significantData["Disconnect Reason"]}`,
           emoji: true,
         },
       ],
