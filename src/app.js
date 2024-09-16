@@ -53,7 +53,7 @@ const sslOptions = {
 // Start Slack Bolt app
 (async () => {
   const slackPort = process.env.SLACK_PORT || 3000;
-  const expressPort = process.env.EXPRESS_PORT || 8080;
+  const expressPort = process.env.EXPRESS_PORT || 8888;
 
   // Start Slack Bolt app
   await slackApp.start(slackPort);
