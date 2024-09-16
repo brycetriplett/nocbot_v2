@@ -22,6 +22,10 @@ const webhookBlocks = ({
       fields: [
         {
           type: "mrkdwn",
+          text: `*Alert Status*: ${alertStatus}`,
+        },
+        {
+          type: "mrkdwn",
           text: `*Site*: ${significantData.Site}`,
         },
         {
