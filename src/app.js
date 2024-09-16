@@ -1,6 +1,7 @@
 require("module-alias/register");
 require("dotenv").config();
-
+const fs = require("fs");
+const https = require("https");
 const { App } = require("@slack/bolt");
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -43,6 +44,12 @@ expressApp.post("/webhook", (req, res) => {
   res.status(200).send("Webhook received!");
 });
 
+// Load SSL certificate and key
+const sslOptions = {
+  key: fs.readFileSync("key.pem"),
+  cert: fs.readFileSync("cert.pem"),
+};
+
 // Start Slack Bolt app
 (async () => {
   const slackPort = process.env.SLACK_PORT || 3000;
@@ -52,8 +59,8 @@ expressApp.post("/webhook", (req, res) => {
   await slackApp.start(slackPort);
   console.log(`Slack Bolt app is running on port ${slackPort}!`);
 
-  // Start Express server
-  expressApp.listen(expressPort, () => {
-    console.log(`Express server is running on port ${expressPort}!`);
+  // Start HTTPS server for Express
+  https.createServer(sslOptions, expressApp).listen(expressPort, () => {
+    console.log(`Express server with SSL is running on port ${expressPort}!`);
   });
 })();
