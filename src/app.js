@@ -46,8 +46,8 @@ expressApp.post("/webhook", (req, res) => {
 
 // Load SSL certificate and key
 const sslOptions = {
-  key: fs.readFileSync("key.pem"),
-  cert: fs.readFileSync("cert.pem"),
+  key: fs.readFileSync("src/key.pem"),
+  cert: fs.readFileSync("src/cert.pem"),
 };
 
 // Start Slack Bolt app
