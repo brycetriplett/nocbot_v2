@@ -44,7 +44,7 @@ expressApp.use(bodyParser.json()); // Parse JSON body
 async function postToSlack(blocks) {
   try {
     await slackApp.client.chat.postMessage({
-      channel: process.env.SLACK_CHANNEL_ID, // Ensure you set this environment variable
+      channel: "C07M3EJQQTZ", // Ensure you set this environment variable
       text: "fallback message", // This is required by Slack but can be a fallback text
       blocks: blocks,
     });
