@@ -1,4 +1,4 @@
-const webhookBlocks = require("@blocks/webhookBlocks");
+const { webhookBlocks } = require("@blocks/webhookBlocks");
 const taranaAPI = require("@services/tarana/taranaAPI.js");
 
 const webhookController = async (req, res, postToSlack) => {
