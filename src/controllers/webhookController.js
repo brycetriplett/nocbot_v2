@@ -19,8 +19,6 @@ const webhookController = async (req, res, postToSlack) => {
     req.body.notes = "this is a test";
   }
 
-  req.body.notes = result.data.notes.replace(/\s+/g, " ").trim();
-
   // send message to the slack channel
   await postToSlack(webhookBlocks(req.body));
 };
