@@ -46,7 +46,7 @@ const webhookBlocks = ({
       ],
     },
   ];
-  console.log(`\n\n\n${blocks}\n\n\n`);
+  console.log(`\n\n\n${JSON.stringify(blocksPayload, null, 2)}\n\n\n`);
   return {
     text: "Fallback message",
     blocks: blocks,
