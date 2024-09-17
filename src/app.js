@@ -7,7 +7,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const controllers = require("@controllers");
-const { webhookBlocks } = require("@blocks/webhookBlocks"); // Import the function correctly
+const { webhookBlocks } = require("@blocks/webhookBlocks");
 
 // Initialize Slack Bolt app
 const slackApp = new App({
@@ -19,13 +19,14 @@ const slackApp = new App({
   logLevel: LogLevel.DEBUG, // Optional: set the log level to DEBUG for more verbose logs
 });
 
-// Middleware for Slack commands
+// Middleware for Slack slash commands. Lets the user know that the command was accepted
 slackApp.use(async ({ ack, respond, next }) => {
   await ack();
   await respond("processing command....");
   await next();
 });
 
+// slack slash commands
 slackApp.command("/telrad", controllers.telradController);
 slackApp.command("/ericsson", controllers.ericssonController);
 slackApp.command("/tarana", controllers.taranaController);
@@ -34,48 +35,26 @@ slackApp.command("/pushover", controllers.pushoverController);
 slackApp.command("/pppoe", controllers.pppoeController);
 slackApp.command("/ping", controllers.pingController);
 
+// all errors in this application are sent to a slack channel
+// do not use try
 slackApp.error(controllers.errorController(slackApp));
 
-// Initialize Express app
+// Initialize Express app for listening to webhooks
 const expressApp = express();
-expressApp.use(bodyParser.json()); // Parse JSON body
+expressApp.use(bodyParser.json());
 
-// Function to post a message to Slack
+// Function to post a message to the tarana_alerts slack channel for webhooks
 async function postToSlack(blocks) {
-  try {
-    await slackApp.client.chat.postMessage({
-      channel: "C07M3EJQQTZ", // Ensure you set this environment variable
-      text: "fallback message", // This is required by Slack but can be a fallback text
-      blocks: blocks,
-    });
-  } catch (error) {
-    console.error("Error posting to Slack:", error);
-  }
+  await slackApp.client.chat.postMessage({
+    channel: "C07M3EJQQTZ",
+    text: "fallback message",
+    blocks: blocks,
+  });
 }
 
-// Webhook endpoint
-expressApp.post("/webhook", (req, res) => {
-  console.log("Received webhook payload:", req.body);
-
-  // Transform the incoming payload to the format required by webhookBlocks
-  const {
-    alertStatus,
-    significantData,
-    alertName,
-    alertDescription,
-    alertCreatedAt,
-  } = req.body;
-
-  const messageBlocks = webhookBlocks({
-    alertStatus,
-    significantData,
-    alertName,
-    alertDescription,
-    alertCreatedAt,
-  });
-
-  postToSlack(messageBlocks.blocks); // Use the blocks from webhookBlocks
-  res.status(200).send("Webhook received!");
+// endpoint for listening to incoming webhooks
+expressApp.post("/webhook", async (req, res) => {
+  await controllers.webhookController(req, res, postToSlack);
 });
 
 // Load SSL certificate and key
@@ -84,7 +63,7 @@ const sslOptions = {
   cert: fs.readFileSync("src/cert.pem"),
 };
 
-// Start Slack Bolt app
+// Start Slack Bolt and Express
 (async () => {
   const slackPort = process.env.SLACK_PORT || 3000;
   const expressPort = process.env.EXPRESS_PORT || 8888;

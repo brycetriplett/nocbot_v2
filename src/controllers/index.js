@@ -7,4 +7,5 @@ module.exports = {
   pingController: require("./pingController"),
   taranaController: require("./taranaController"),
   cbrsTaranaController: require("./cbrsTaranaController"),
+  webhookController: require("./webhookController"),
 };

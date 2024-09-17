@@ -4,6 +4,7 @@ const webhookBlocks = ({
   alertName,
   alertDescription,
   alertCreatedAt,
+  notes,
 }) => {
   const blocks = [
     {
@@ -35,6 +36,10 @@ const webhookBlocks = ({
         {
           type: "mrkdwn",
           text: `*Sector*: ${significantData.Sector}`,
+        },
+        {
+          type: "mrkdwn",
+          text: `*Notes*: ${notes}`,
         },
       ],
     },

@@ -30,6 +30,28 @@ const startSpeedTest = (serial) =>
       }
     });
 
+const getDeviceConfig = (serial) =>
+  axios({
+    method: "GET",
+    headers: headers,
+    url: `${hosturl}/v2/network/radios/${serial}`,
+  })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      if (error.response && error.response.status === 403) {
+        const errorMessage = {
+          code: 403,
+          message: `${serial} is either not accessible for user or is not a valid serial number`,
+        };
+        throw errorMessage;
+      } else {
+        throw error;
+      }
+    });
+
 module.exports = {
   startSpeedTest,
+  getDeviceConfig,
 };
