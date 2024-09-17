@@ -20,7 +20,23 @@ const webhookController = async (req, res, postToSlack) => {
   }
 
   // send message to the slack channel
-  await postToSlack(webhookBlocks(req.body));
+  // await postToSlack(webhookBlocks(req.body));
+
+  const testBlock = {
+    text: "Fallback message",
+    blocks: [
+      {
+        type: "header",
+        text: {
+          type: "plain_text",
+          text: "Alert: Webhook testing",
+          emoji: true,
+        },
+      },
+    ],
+  };
+
+  await postToSlack(testBlock);
 };
 
 module.exports = webhookController;
