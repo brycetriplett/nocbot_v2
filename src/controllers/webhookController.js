@@ -20,7 +20,7 @@ const webhookController = async (req, res, postToSlack) => {
   }
 
   //send message to the slack channel
-  return webhookBlocks(req.body);
+  await postToSlack(webhookBlocks(req.body));
 };
 
 module.exports = webhookController;
