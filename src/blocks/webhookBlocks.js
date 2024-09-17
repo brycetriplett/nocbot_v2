@@ -46,7 +46,7 @@ const webhookBlocks = ({
       ],
     },
   ];
-
+  console.log(`\n\n\n${blocks}\n\n\n`);
   return {
     text: "Fallback message",
     blocks: blocks,
