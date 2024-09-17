@@ -27,26 +27,28 @@ const webhookBlocks = ({
         },
         {
           type: "mrkdwn",
-          text: `*Site*: ${significantData.Site}`,
+          text: `*Site*: ${significantData?.Site || "N/A"}`, // Ensure significantData exists
         },
         {
           type: "mrkdwn",
-          text: `*Serial*: ${significantData["Device Serial Number"]}`,
+          text: `*Serial*: ${
+            significantData?.["Device Serial Number"] || "N/A"
+          }`, // Ensure significantData exists
         },
         {
           type: "mrkdwn",
-          text: `*Sector*: ${significantData.Sector}`,
+          text: `*Sector*: ${significantData?.Sector || "N/A"}`, // Ensure significantData exists
         },
         {
           type: "mrkdwn",
-          text: `*Notes*: ${notes}`,
+          text: `*Notes*: ${notes || "No notes available"}`,
         },
       ],
     },
   ];
 
   return {
-    text: "fallback message",
+    text: "Fallback message",
     blocks: blocks,
   };
 };
