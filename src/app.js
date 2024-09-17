@@ -54,7 +54,8 @@ async function postToSlack(blocks) {
 
 // endpoint for listening to incoming webhooks
 expressApp.post("/webhook", async (req, res) => {
-  await controllers.webhookController(req, res, postToSlack);
+  result = await controllers.webhookController(req, res, postToSlack);
+  await postToSlack(result);
 });
 
 // Load SSL certificate and key
