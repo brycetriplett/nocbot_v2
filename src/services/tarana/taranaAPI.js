@@ -40,15 +40,23 @@ const getDeviceConfig = (serial) =>
       return response.data;
     })
     .catch((error) => {
-      if (error.response && error.response.status === 403) {
-        const errorMessage = {
-          code: 403,
-          message: `${serial} is either not accessible for user or is not a valid serial number`,
-        };
-        throw errorMessage;
-      } else {
-        throw error;
+      if (error.response) {
+        if (error.response.status === 403) {
+          const errorMessage = {
+            code: 403,
+            message: `${serial} is either not accessible for the user or is not a valid serial number`,
+          };
+          throw errorMessage;
+        } else if (error.response.status === 404) {
+          const errorMessage = {
+            code: 404,
+            message: `Device with serial number ${serial} was not found`,
+          };
+          throw errorMessage;
+        }
       }
+      // If the error is not a 403 or 404, throw the original error
+      throw error;
     });
 
 module.exports = {
