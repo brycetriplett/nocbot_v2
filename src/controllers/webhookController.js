@@ -11,15 +11,12 @@ const webhookController = async (req, res, postToSlack) => {
 
   if (/^[A-Z0-9]{8,16}$/.test(serial)) {
     // if serial, grab config
-    let result;
     try {
-      result = await taranaAPI.getDeviceConfig(serial);
+      const result = await taranaAPI.getDeviceConfig(serial);
+      req.body.notes = result.data.notes.replace(/\s+/g, " ").trim();
     } catch {
-      result = "error looking up serial number";
+      req.body.notes = "error looking up serial number";
     }
-
-    // turn all white space in the notes into spaces
-    req.body.notes = result.data.notes.replace(/\s+/g, " ").trim();
   } else {
     // add dummy data for api testing
     req.body.notes = "this is a test";
