@@ -5,8 +5,11 @@ const webhookController = async (req, res, postToSlack) => {
   // ack
   res.status(200).send("Webhook received!");
 
+  console.log("received data:", JSON.stringify(req.body, null, 2));
+
   // check if the serial value is actually a serial or test data
   const serial = req.body.significantData["Device Serial Number"];
+
   if (/^[A-Z0-9]{8,12}$/.test(serial)) {
     // if serial, grab config
     const result = await taranaAPI.getDeviceConfig(serial);
