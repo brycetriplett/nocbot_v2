@@ -11,7 +11,7 @@ const webhookBlocks = ({
       type: "header",
       text: {
         type: "plain_text",
-        text: `:tarana: Alert: ${alertName} :skull:`,
+        text: `:tarana: \tAlert: ${alertName}\t :skull:`,
         emoji: true,
       },
     },
