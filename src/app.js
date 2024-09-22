@@ -64,7 +64,7 @@ expressApp.post("/webhook", async (req, res) => {
   const secretCheck = (secret) => {
     const hmac = crypto.createHmac("sha256", secret);
     hmac.update(requestBody);
-    return results.push(hmac.digest("base64"));
+    return hmac.digest("base64");
   };
 
   const webhookEncrypt = secretCheck(webhook);
