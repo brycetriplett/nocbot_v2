@@ -5,6 +5,7 @@ const https = require("https");
 const { App, LogLevel } = require("@slack/bolt");
 const express = require("express");
 const bodyParser = require("body-parser");
+const crypto = require("crypto");
 
 const controllers = require("@controllers");
 const { webhookBlocks } = require("@blocks/webhookBlocks");
@@ -54,6 +55,19 @@ async function postToSlack(blocks) {
 
 // endpoint for listening to incoming webhooks
 expressApp.post("/webhook", async (req, res) => {
+  const signature = req.headers["x-tarana-signature"];
+  const secret = "h7eIT3xdi8jCm3D44F0wr4AqOQDzsgP1";
+  const requestBody = JSON.stringify(req.body);
+  const hmac = crypto.createHmac("sha256", secret);
+  hmac.update(requestBody);
+  const computedSignature = hmac.digest("base64");
+
+  console.log("\n");
+  console.log(computedSignature);
+  console.log("\n");
+  console.log(signature);
+  console.log("\n");
+
   await controllers.webhookController(req, res, postToSlack);
 });
 

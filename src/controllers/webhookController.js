@@ -5,8 +5,6 @@ const webhookController = async (req, res, postToSlack) => {
   // ack
   res.status(200).send("Webhook received!");
 
-  console.log(req.headers);
-
   console.log(req.body.significantData["Device Serial Number"]);
   // check if the serial value is actually a serial or test data
   const serial = req.body.significantData["Device Serial Number"];
