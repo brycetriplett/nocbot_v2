@@ -1,7 +1,8 @@
 const { webhookBlocks } = require("@blocks/webhookBlocks");
 const taranaAPI = require("@services/tarana/taranaAPI.js");
+const cbrsTaranaAPI = require("@services/tarana/cbrsTaranaAPI.js");
 
-const webhookController = async (req, res, postToSlack) => {
+const webhookController = async (req, res, cbrs, postToSlack) => {
   // ack
   res.status(200).send("Webhook received!");
 
@@ -12,7 +13,12 @@ const webhookController = async (req, res, postToSlack) => {
   if (/^[A-Z0-9]{8,16}$/.test(serial)) {
     // if serial, grab config
     try {
-      const result = await taranaAPI.getDeviceConfig(serial);
+      let result;
+      if (cbrs === false) {
+        result = await taranaAPI.getDeviceConfig(serial);
+      } else if (cbrs === true) {
+        result = await cbrsTaranaAPI.getDeviceConfig(serial);
+      }
       req.body.notes = result.data.notes.replace(/\s+/g, " ").trim();
     } catch {
       req.body.notes = "error looking up serial number";

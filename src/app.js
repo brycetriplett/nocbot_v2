@@ -56,19 +56,35 @@ async function postToSlack(blocks) {
 // endpoint for listening to incoming webhooks
 expressApp.post("/webhook", async (req, res) => {
   const signature = req.headers["x-tarana-signature"];
-  const secret = "h7eIT3xdi8jCm3D44F0wr4AqOQDzsgP1";
   const requestBody = JSON.stringify(req.body);
-  const hmac = crypto.createHmac("sha256", secret);
-  hmac.update(requestBody);
-  const computedSignature = hmac.digest("base64");
 
-  console.log("\n");
-  console.log(computedSignature);
-  console.log("\n");
-  console.log(signature);
-  console.log("\n");
+  const webhook = process.env.TARANA_WEBHOOK_SECRET;
+  const cbrs_webhook = process.env.CBRS_TARANA_WEBHOOK_SECRET;
 
-  await controllers.webhookController(req, res, postToSlack);
+  const secretCheck = (secret) => {
+    const hmac = crypto.createHmac("sha256", secret);
+    hmac.update(requestBody);
+    return results.push(hmac.digest("base64"));
+  };
+
+  const webhookEncrypt = secretCheck(webhook);
+  const cbrsWebhookEncrypt = secretCheck(cbrs_webhook);
+
+  let cbrs;
+
+  switch (signature) {
+    case webhookEncrypt:
+      cbrs = false;
+      break;
+
+    case cbrsWebhookEncrypt:
+      cbrs = true;
+
+    default:
+      break;
+  }
+
+  await controllers.webhookController(req, res, cbrs, postToSlack);
 });
 
 // Load SSL certificate and key
