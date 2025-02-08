@@ -6,11 +6,19 @@ const cbrsTaranaController = async ({ command, say, respond }) => {
 
   let header;
   let result;
+  let blocks;
 
   switch (method) {
     case "speedtest":
       header = ":tarana: \tTarana Start Speed Test\t :racing_motorcycle:";
       result = await cbrsTaranaAPI.startSpeedTest(serial);
+      blocks = taranaBlocks.speedTestBlocks;
+      break;
+
+    case "view":
+      header = ":tarana: \tTarana Device Config\t :gear:";
+      result = await cbrsTaranaAPI.getDeviceConfig(serial);
+      blocks = taranaBlocks.viewBlocks;
       break;
 
     default:
@@ -19,7 +27,7 @@ const cbrsTaranaController = async ({ command, say, respond }) => {
   }
 
   if (!result.error) {
-    say(taranaBlocks.defaultBlocks({ command, result, header }));
+    say(blocks({ command, result, header }));
   } else {
     const errorMessage = result.error.message;
     throw new Error(errorMessage);
