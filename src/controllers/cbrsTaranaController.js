@@ -9,7 +9,7 @@ const cbrsTaranaController = async ({ command, say, respond }) => {
 
   switch (method) {
     case "speedtest":
-      header = ":tarana: \tCBRS Tarana Start Speed Test\t :racing_motorcycle:";
+      header = ":tarana: \tTarana Start Speed Test\t :racing_motorcycle:";
       result = await cbrsTaranaAPI.startSpeedTest(serial);
       break;
 

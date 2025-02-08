@@ -30,8 +30,7 @@ slackApp.use(async ({ ack, respond, next }) => {
 // slack slash commands
 slackApp.command("/telrad", controllers.telradController);
 slackApp.command("/ericsson", controllers.ericssonController);
-slackApp.command("/tarana", controllers.taranaController);
-slackApp.command("/cbrs-tarana", controllers.cbrsTaranaController);
+slackApp.command("/tarana", controllers.cbrsTaranaController);
 slackApp.command("/pushover", controllers.pushoverController);
 slackApp.command("/pppoe", controllers.pppoeController);
 slackApp.command("/ping", controllers.pingController);
