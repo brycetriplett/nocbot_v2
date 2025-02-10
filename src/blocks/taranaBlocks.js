@@ -77,7 +77,22 @@ const viewBlocks = ({ command, result, header }) => {
           },
           {
             type: "plain_text",
+            text: `Site: ${result.data.hierarchy.site}`,
+            emoji: true,
+          },
+          {
+            type: "plain_text",
+            text: `Sector: ${result.data.hierarchy.sector}`,
+            emoji: true,
+          },
+          {
+            type: "plain_text",
             text: `SLA: ${result.data.slaProfile}`,
+            emoji: true,
+          },
+          {
+            type: "plain_text",
+            text: `Notes: ${result.data.notes}`,
             emoji: true,
           },
         ],
