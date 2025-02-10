@@ -101,6 +101,15 @@ const viewBlocks = ({ command, result, header }) => {
         type: "context",
         elements: [
           {
+            type: "mrkdwn",
+            text: `Command executed by *${command.user_name}*`,
+          },
+        ],
+      },
+      {
+        type: "context",
+        elements: [
+          {
             type: "plain_text",
             text: "\n",
             emoji: true,
