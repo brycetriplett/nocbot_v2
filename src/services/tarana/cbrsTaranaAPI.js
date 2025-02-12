@@ -66,7 +66,7 @@ const getDeviceConfig = (serial) =>
       url: `${hosturl}/v1/network/operators/sla-profiles`,
     })
       .then((response) => {
-        return response.data.map(x => x.profileId).join(", ");
+        return response.data.data.map(x => x.profileId).join(", ");
       })
       .catch((error) => {
         throw error;
