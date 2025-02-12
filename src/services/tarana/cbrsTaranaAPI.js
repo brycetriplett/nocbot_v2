@@ -81,7 +81,8 @@ const getDeviceConfig = (serial) =>
         slaProfile: profile,
       },
     })
-      .then(() => {
+      .then((response) => {
+        console.log(response.status);
         return getDeviceConfig(serial);
       })
       .catch((error) => {
