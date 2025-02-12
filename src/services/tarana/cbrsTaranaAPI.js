@@ -75,7 +75,12 @@ const getDeviceConfig = (serial) =>
       });
 
   const changeSla = async (serial, profile) => {
+    try {
     await getDeviceConfig(serial);
+
+    } catch (error) {
+      throw error
+    }
     axios({
       method: "PATCH",
       headers: headers,
