@@ -74,7 +74,8 @@ const getDeviceConfig = (serial) =>
         throw error;
       });
 
-  const changeSla = (serial, profile) =>
+  const changeSla = async (serial, profile) => {
+    await getDeviceConfig(serial);
     axios({
       method: "PATCH",
       headers: headers,
@@ -103,7 +104,7 @@ const getDeviceConfig = (serial) =>
         } else {
           throw error;
         }
-      });
+      });}
 
 module.exports = {
   startSpeedTest,
