@@ -72,8 +72,8 @@ const getDeviceConfig = (serial) =>
         throw error;
       });
 
-  const changeSla = async (serial, profile) =>
-    axios({
+  const changeSla = async (serial, profile) => {
+    return axios({
       method: "PATCH",
       headers: headers,
       url: `${hosturl}/v1/network/radios/${serial}`,
@@ -101,7 +101,7 @@ const getDeviceConfig = (serial) =>
         } else {
           throw error;
         }
-      });
+      });}
 
 module.exports = {
   startSpeedTest,
