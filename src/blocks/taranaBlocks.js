@@ -140,6 +140,16 @@ const slaListBlocks = ({ command, result, header }) => {
         fields: [
           {
             type: "plain_text",
+            text: `${command.command} ${command.text}`,
+            emoji: true,
+          },
+        ],
+      },
+      {
+        type: "section",
+        fields: [
+          {
+            type: "plain_text",
             text: result,
             emoji: true,
           },
