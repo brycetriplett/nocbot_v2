@@ -37,6 +37,8 @@ const getDeviceConfig = (serial) =>
     url: `${hosturl}/v2/network/radios/${serial}`,
   })
     .then((response) => {
+      console.log(`This is the response:`);
+      console.log(response.data)
       return response.data;
     })
     .catch((error) => {
@@ -81,9 +83,7 @@ const getDeviceConfig = (serial) =>
         slaProfile: profile,
       },
     })
-      .then((response) => {
-        console.log(`This is the response:`);
-        console.log(response.data)
+      .then(() => {
         return getDeviceConfig(serial);
       })
       .catch((error) => {
