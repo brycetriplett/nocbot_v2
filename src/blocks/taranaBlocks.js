@@ -120,4 +120,52 @@ const viewBlocks = ({ command, result, header }) => {
   };
 };
 
-module.exports = { speedTestBlocks, viewBlocks };
+const slaListBlocks = ({ command, result, header }) => {
+  return {
+    text: "fallback message",
+    blocks: [
+      {
+        type: "header",
+        text: {
+          type: "plain_text",
+          text: header,
+          emoji: true,
+        },
+      },
+      {
+        type: "divider",
+      },
+      {
+        type: "section",
+        fields: [
+          {
+            type: "plain_text",
+            text: `SLA List: ${result}`,
+            emoji: true,
+          },
+        ],
+      },
+      {
+        type: "context",
+        elements: [
+          {
+            type: "mrkdwn",
+            text: `Command executed by *${command.user_name}*`,
+          },
+        ],
+      },
+      {
+        type: "context",
+        elements: [
+          {
+            type: "plain_text",
+            text: "\n",
+            emoji: true,
+          },
+        ],
+      },
+    ],
+  };
+};
+
+module.exports = { speedTestBlocks, viewBlocks, slaListBlocks };

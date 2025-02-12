@@ -21,6 +21,12 @@ const cbrsTaranaController = async ({ command, say, respond }) => {
       blocks = taranaBlocks.viewBlocks;
       break;
 
+    case "slalist":
+      header = ":tarana: \tTarana SLA List\t :clipboard:";
+      result = await cbrsTaranaAPI.getSLAList(serial);
+      blocks = taranaBlocks.slaListBlocks;
+      break;
+
     default:
       respond("incorrect command");
       return;

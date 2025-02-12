@@ -59,7 +59,21 @@ const getDeviceConfig = (serial) =>
       throw error;
     });
 
+  const getSlaList = () =>
+    axios({
+      method: "GET",
+      headers: headers,
+      url: `${hosturl}/v1/network/operators/sla-profiles`,
+    })
+      .then((response) => {
+        return response.data.map(x => x.profileId).join(", ");
+      })
+      .catch((error) => {
+        throw error;
+      });
+
 module.exports = {
   startSpeedTest,
   getDeviceConfig,
+  getSlaList,
 };
