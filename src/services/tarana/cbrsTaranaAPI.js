@@ -37,8 +37,6 @@ const getDeviceConfig = (serial) =>
     url: `${hosturl}/v2/network/radios/${serial}`,
   })
     .then((response) => {
-      console.log(`This is the response:`);
-      console.log(response.data)
       return response.data;
     })
     .catch((error) => {
@@ -75,8 +73,7 @@ const getDeviceConfig = (serial) =>
       });
 
   const changeSla = async (serial, profile) => {
-    await getDeviceConfig(serial);
-    await axios({
+    axios({
       method: "PATCH",
       headers: headers,
       url: `${hosturl}/v1/network/radios/${serial}`,
