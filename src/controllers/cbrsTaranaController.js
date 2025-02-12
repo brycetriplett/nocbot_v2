@@ -23,7 +23,7 @@ const cbrsTaranaController = async ({ command, say, respond }) => {
 
     case "slalist":
       header = ":tarana: \tTarana SLA List\t :clipboard:";
-      result = await cbrsTaranaAPI.getSLAList(serial);
+      result = await cbrsTaranaAPI.getSlaList(serial);
       blocks = taranaBlocks.slaListBlocks;
       break;
 
