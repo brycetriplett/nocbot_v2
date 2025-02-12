@@ -27,6 +27,12 @@ const cbrsTaranaController = async ({ command, say, respond }) => {
       blocks = taranaBlocks.slaListBlocks;
       break;
 
+    case "changesla":
+      header = ":tarana: \tTarana SLA has been changed\t :pencil:";
+      result = await cbrsTaranaAPI.changeSla(serial, option);
+      blocks = taranaBlocks.viewblocks;
+      break;
+
     default:
       respond("incorrect command");
       return;

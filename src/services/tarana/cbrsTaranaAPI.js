@@ -72,8 +72,33 @@ const getDeviceConfig = (serial) =>
         throw error;
       });
 
+  const changeSla = (serial, profile) =>
+    axios({
+      method: "PATCH",
+      headers: headers,
+      url: `${hosturl}/v1/network/radios/${serial}`,
+      data: {
+        slaProfile: profile,
+      },
+    })
+      .then(() => {
+        return getDeviceConfig(serial);
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 403) {
+          const errorMessage = {
+            code: 403,
+            message: `${serial} is either not accessible for user or is not a valid serial number`,
+          };
+          throw errorMessage;
+        } else {
+          throw error;
+        }
+      });
+
 module.exports = {
   startSpeedTest,
   getDeviceConfig,
   getSlaList,
+  changeSla,
 };
