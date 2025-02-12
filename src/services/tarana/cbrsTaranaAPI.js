@@ -91,6 +91,13 @@ const getDeviceConfig = (serial) =>
             message: `${serial} is either not accessible for user or is not a valid serial number`,
           };
           throw errorMessage;
+        } else if (error.response && error.response.status === 400) {
+          const errorMessage = {
+            code: 400,
+            message: `SLA profile used is not valid. Please execute "/tarana slalist" to get a list of valid SLA profiles`,
+          };
+          throw errorMessage
+          
         } else {
           throw error;
         }
