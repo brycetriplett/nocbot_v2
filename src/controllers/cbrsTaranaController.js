@@ -30,7 +30,7 @@ const cbrsTaranaController = async ({ command, say, respond }) => {
     case "changesla":
       header = ":tarana: \tTarana SLA has been changed\t :pencil:";
       result = await cbrsTaranaAPI.changeSla(serial, option);
-      blocks = taranaBlocks.viewblocks;
+      blocks = taranaBlocks.viewBlocks;
       break;
 
     default:
