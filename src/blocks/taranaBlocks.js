@@ -140,7 +140,7 @@ const slaListBlocks = ({ command, result, header }) => {
         fields: [
           {
             type: "plain_text",
-            text: `SLA List: ${result}`,
+            text: result,
             emoji: true,
           },
         ],
