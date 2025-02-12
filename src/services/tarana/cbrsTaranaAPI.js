@@ -82,7 +82,7 @@ const getDeviceConfig = (serial) =>
       },
     })
       .then((response) => {
-        console.log(response.status);
+        console.log(`This is the response: ${response.status}`);
         return getDeviceConfig(serial);
       })
       .catch((error) => {
