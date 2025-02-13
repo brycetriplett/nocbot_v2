@@ -72,6 +72,33 @@ const getDeviceConfig = (serial) =>
         throw error;
       });
 
+  const changeNotes = async (serial) => {
+    const data = await getDeviceConfig(serial);
+    let notes = `${data.data.notes.split("[")[0].trimEnd()}\n[ ${data.data.slaProfile} ]`;
+    return axios({
+      method: "PATCH",
+      headers: headers,
+      url: `${hosturl}/v1/network/radios/${serial}`,
+      data: {
+        notes: notes,
+      },
+    })
+      .then(() => {
+        return getDeviceConfig(serial);
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 403) {
+          const errorMessage = {
+            code: 403,
+            message: `${serial} is either not accessible for user or is not a valid serial number`,
+          };
+          throw errorMessage;
+        } else {
+          throw error;
+        }
+      });
+  };
+
   const changeSla = async (serial, profile) => {
     await getDeviceConfig(serial);
     return axios({
@@ -83,7 +110,7 @@ const getDeviceConfig = (serial) =>
       },
     })
       .then(() => {
-        return getDeviceConfig(serial);
+        return changeNotes(serial);
       })
       .catch((error) => {
         if (error.response && error.response.status === 403) {
@@ -109,4 +136,5 @@ module.exports = {
   getDeviceConfig,
   getSlaList,
   changeSla,
+  changeNotes,
 };
