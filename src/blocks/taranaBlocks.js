@@ -82,27 +82,27 @@ const viewBlocks = ({ command, result, header }) => {
         fields: [
           {
             type: "plain_text",
-            text: `Serial: ${result.data.serialNumber}\n\n`,
+            text: `Serial: ${result.data.serialNumber}\n`,
             emoji: true,
           },
           {
             type: "plain_text",
-            text: `Site: ${result.data.hierarchy.site.name}\n\n`,
+            text: `Site: ${result.data.hierarchy.site.name}\n`,
             emoji: true,
           },
           {
             type: "plain_text",
-            text: `Sector: ${result.data.hierarchy.sector.name}\n\n`,
+            text: `Sector: ${result.data.hierarchy.sector.name}\n`,
             emoji: true,
           },
           {
             type: "plain_text",
-            text: `SLA: ${result.data.slaProfile}\n\n`,
+            text: `SLA: ${result.data.slaProfile}\n`,
             emoji: true,
           },
           {
             type: "plain_text",
-            text: `Notes: ${result.data.notes}\n\n`,
+            text: `Notes: ${result.data.notes}\n`,
             emoji: true,
           },
         ],
