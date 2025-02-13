@@ -81,28 +81,28 @@ const viewBlocks = ({ command, result, header }) => {
         type: "section",
         fields: [
           {
-            type: "mrkdwn",
-            text: `*Serial*: ${result.data.serialNumber}`,
+            type: "plain_text",
+            text: `Serial: ${result.data.serialNumber}\n`,
             emoji: true,
           },
           {
-            type: "mrkdwn",
-            text: `*Site*: ${result.data.hierarchy.site.name}`,
+            type: "plain_text",
+            text: `Site: ${result.data.hierarchy.site.name}\n`,
             emoji: true,
           },
           {
-            type: "mrkdwn",
-            text: `*Sector*: ${result.data.hierarchy.sector.name}`,
+            type: "plain_text",
+            text: `Sector: ${result.data.hierarchy.sector.name}\n`,
             emoji: true,
           },
           {
-            type: "mrkdwn",
-            text: `*SLA*: ${result.data.slaProfile}`,
+            type: "plain_text",
+            text: `SLA: ${result.data.slaProfile}\n`,
             emoji: true,
           },
           {
-            type: "mrkdwn",
-            text: `*Notes*: ${result.data.notes}`,
+            type: "plain_text",
+            text: `Notes: ${result.data.notes}\n`,
             emoji: true,
           },
         ],
