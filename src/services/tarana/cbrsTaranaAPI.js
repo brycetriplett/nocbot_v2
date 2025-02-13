@@ -74,7 +74,7 @@ const getDeviceConfig = (serial) =>
 
   const changeNotes = async (serial) => {
     const data = await getDeviceConfig(serial);
-    let notes = `${data.data.notes.split("[")[0].trimEnd()}\n[ ${data.data.slaProfile} ]`;
+    let notes = `${data.data.notes.split("[")[0].trimEnd()}\n[ SLA: ${data.data.slaProfile} ]`;
     return axios({
       method: "PATCH",
       headers: headers,
